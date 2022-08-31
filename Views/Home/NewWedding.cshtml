@@ -1,0 +1,33 @@
+@model Wedding
+<div class="d-flex justify-content-between align-items-center mt-3 mb-3">
+    <h1>Plan Your Wedding</h1>
+    <div>
+        <a href="/dashboard">Dashboard</a>
+        <a class="ml-5" href="/">Logout</a>
+    </div>
+</div>
+<form class="text-center" action="/createWedding" method="post">
+    <div class="form-group">
+        <label for="WedderOne">Wedder One</label>
+        <input class="form-control" asp-for="WedderOne">
+        <span class="text-danger" asp-validation-for="WedderOne"></span>
+    </div>
+    <div class="form-group">
+        <label for="WedderTwo">Wedder Two</label>
+        <input class="form-control" asp-for="WedderTwo">
+        <span class="text-danger" asp-validation-for="WedderTwo"></span>
+    </div>
+    <div class="form-group">
+        <label for="Date">Date</label>
+        <input class="form-control" asp-for="Date">
+        <span class="text-danger" asp-validation-for="Date"></span>
+    </div>
+    <div class="form-group">
+        <label for="Address">Wedding Address</label>
+        <input class="form-control" asp-for="Address">
+        <span class="text-danger" asp-validation-for="Address"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Register">
+    </div>
+</form>

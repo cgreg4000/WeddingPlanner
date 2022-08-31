@@ -1,0 +1,55 @@
+@model Attendance
+<div class="d-flex justify-content-between align-items-center mt-3 mb-3">
+    <h1>Welcome to the Wedding Planner</h1>
+    <a href="/">Log Out</a>
+</div>
+<table class="table table-striped">
+    <tr>
+        <th>Wedding</th>
+        <th>Date</th>
+        <th>Guests</th>
+        <th>Action</th>
+    </tr>
+    @foreach (Wedding w in ViewBag.AllWeddings)
+    {
+        <tr>
+            <td><a href="/wedding/@w.WeddingId">@w.WedderOne & @w.WedderTwo</a></td>
+            <td>@w.Date.ToString("MMMM dd, yyyy")</td>
+            <td>@w.Attendees.Count</td>
+            @if (w.UserId == ViewBag.LoggedInUser.UserId)
+            {
+                <td><a class="text-danger" href="/delete/@w.WeddingId">Delete</a></td>
+            }
+            else
+            {
+                <td>
+                    @{
+                        bool found = false;
+                        int attendanceId = 0;
+                        foreach (Attendance item in w.Attendees)
+                        {
+                            if (item.UserId == ViewBag.LoggedInUser.UserId)
+                            {
+                                found = true;
+                                attendanceId = item.AttendanceId;
+                            }
+                        }
+                        if (found)
+                        {
+                            <a href="/notAttending/@attendanceId">Un-RSVP</a>
+                        }
+                        else
+                        {
+                            <form action="/attending" method="post">
+                                <input type="hidden" asp-for="UserId" value="@ViewBag.LoggedInUser.UserId">
+                                <input type="hidden" asp-for="WeddingId" value="@w.WeddingId">
+                                <input class="button" type="submit" value="RSVP">
+                            </form>
+                        }
+                    }
+                </td>
+            }
+        </tr>
+    }
+</table>
+<a class="btn btn-primary float-right" href="/newWedding">New Wedding</a>
